@@ -68,6 +68,7 @@ flutter:
     - lib/images/rna.png
     - lib/images/slider.png
     - lib/images/genome.png
+    - lib/data/B_8.json
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

@@ -2,28 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:graphview/graphview.dart';
 import 'dart:math';
-
-var json = {
-  "nodes": [
-    {"id": 1, "label": 'circle'},
-    {"id": 2, "label": 'ellipse'},
-    {"id": 3, "label": 'database'},
-    {"id": 4, "label": 'box'},
-    {"id": 5, "label": 'diamond'},
-    {"id": 6, "label": 'dot'},
-    {"id": 7, "label": 'square'},
-    {"id": 8, "label": 'triangle'},
-  ],
-  "edges": [
-    {"from": 1, "to": 2},
-    {"from": 2, "to": 3},
-    {"from": 2, "to": 4},
-    {"from": 2, "to": 5},
-    {"from": 5, "to": 6},
-    {"from": 5, "to": 7},
-    {"from": 6, "to": 8}
-  ]
-};
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
 
 class TreeViewPage extends StatefulWidget {
   const TreeViewPage({Key? key}) : super(key: key);
@@ -33,6 +13,12 @@ class TreeViewPage extends StatefulWidget {
 }
 
 class _TreeViewPageState extends State<TreeViewPage> {
+
+  List<dynamic> jsonData = [];
+  loadJson() async {
+    String jsonContent = await rootBundle.loadString('data/B_8.json');
+    jsonData = jsonDecode(jsonContent);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +42,9 @@ class _TreeViewPageState extends State<TreeViewPage> {
                     builder: (Node node) {
                       // I can decide what widget should be shown here based on the id
                       var a = node.key!.value as int;
-                      var nodes = json['nodes'];
+                      var nodes = jsonData['nodes'];
                       var nodeValue = nodes!.firstWhere((element) => element['id'] == a);
-                      return rectangleWidget(nodeValue['label'] as String);
+                      return rectangleWidget(nodeValue['name'] as String);
                     },
                   )),
             ),
@@ -92,7 +78,7 @@ class _TreeViewPageState extends State<TreeViewPage> {
 
   @override
   void initState() {
-    for (var element in json['edges']!) {
+    for (var element in jsonData['edges']!) {
       var fromNodeId = element['from'];
       var toNodeId = element['to'];
       graph.addEdge(Node.Id(fromNodeId), Node.Id(toNodeId));
