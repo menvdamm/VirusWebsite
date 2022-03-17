@@ -14,56 +14,48 @@ class HomeScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          toolbarHeight: 120,
-          backgroundColor: Colors.grey,
+          backgroundColor: Colors.white,
           title: Column(
             mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally,
             crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
-            children: [
-              const Text(
+            children: const [
+              Text(
                   "RNA virus evolution",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
+                    color: Colors.black,
                   )
               ),
-              const SizedBox(
+              SizedBox(
                   height: 20
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally,
-                crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
-                children: [
-                  const Text(
-                    "Choose a virus:",
-                    style: TextStyle(fontSize: 15),
-                  ),
-                  const SizedBox(
-                    width: 50,
-                  ),
-                  MenuButton(
-                    options: const ["Influenza A", "Sars-CoV-2"],
-                    selection: "Influenza A",
-                    textcolor: Colors.white,
-                  ),
-                ],
               ),
             ],
           ),
           bottom: const TabBar(
             tabs: <Widget>[
               Tab(
-                text: "RNA analysis",
+                child: Text("protein analysis",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
               ),
               Tab(
-                text: "protein analysis",
-              ),
+                child: Text("RNA analysis",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              )
             ],
           ),
         ),
         body: const TabBarView(
           children: <Widget>[
+            ProteinScreen(),
             RNAScreen(),
-            ProteinScreen()
           ],
         ),
       ),
